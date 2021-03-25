@@ -12,7 +12,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.validation.annotation.Validated;
 
 @Entity
 public class Produto {
@@ -24,14 +28,14 @@ public class Produto {
 	@Column(nullable = false)
 	private String nome;
 
-	@Column(nullable = false)
-	@NotBlank(message = "O campo valor não pode ser vazio")
+	@NotNull(message = "O campo valor não pode ser vazio")
+	@Column(nullable = false)	
 	private BigDecimal valor;
+	
+
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-
-	private List<EntradaProduto> entradas = new ArrayList<>();
-
+	private List<@NotNull @Valid EntradaProduto> entradas = new ArrayList<>();
 	public Long getId() {
 		return id;
 	}
@@ -73,6 +77,14 @@ public class Produto {
 			@NotBlank(message = "O campo valor não pode ser vazio") BigDecimal valor) {
 		this.nome = nome;
 		this.valor = valor;
+	}
+	
+	public void addEntrada(EntradaProduto nova) {
+		this.entradas.add(0,nova);
+	}
+	
+	public void removerEntrada(int index) {
+		this.entradas.remove(index);
 	}
 
 	@Deprecated

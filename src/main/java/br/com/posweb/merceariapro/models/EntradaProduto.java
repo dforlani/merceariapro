@@ -1,29 +1,40 @@
 package br.com.posweb.merceariapro.models;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+@Entity
 public class EntradaProduto {
 
 	@Deprecated
 	public EntradaProduto() {
 	}
 
-	public EntradaProduto(Long id, BigDecimal quantidade, Date dataEntrada) {
+	public EntradaProduto(BigDecimal quantidade, LocalDate data) {
+		super();
+		this.quantidade = quantidade;
+		this.data = data;
+	}
+
+	public EntradaProduto(Long id, BigDecimal quantidade, LocalDate data) {
 		super();
 		this.id = id;
 		this.quantidade = quantidade;
-		this.dataEntrada = dataEntrada;
+		this.data = data;
 	}
-	
-	@OneToOne
+
+	@ManyToOne
 	private Produto produto;
 
 	@Id
@@ -31,13 +42,16 @@ public class EntradaProduto {
 	private Long id;
 
 	@Column(nullable = false)
+	@NotNull
 	private BigDecimal quantidade;
 
-	@Column(name = "data_entrada")
-	private Date dataEntrada;
+	@Column(name = "data")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull
+	private LocalDate data;
 
-	//get 
-	public Long getId() {   
+	// get
+	public Long getId() {
 		return id;
 	}
 
@@ -61,19 +75,19 @@ public class EntradaProduto {
 		this.quantidade = quantidade;
 	}
 
-	public Date getDataEntrada() {
-		return dataEntrada;
+	public LocalDate getData() {
+		return data;
 	}
 
-	public void setDataEntrada(Date dataEntrada) {
-		this.dataEntrada = dataEntrada;
+	public void setData(LocalDate data) {
+		this.data = data;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dataEntrada == null) ? 0 : dataEntrada.hashCode());
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((quantidade == null) ? 0 : quantidade.hashCode());
 		return result;
@@ -88,10 +102,10 @@ public class EntradaProduto {
 		if (getClass() != obj.getClass())
 			return false;
 		EntradaProduto other = (EntradaProduto) obj;
-		if (dataEntrada == null) {
-			if (other.dataEntrada != null)
+		if (data == null) {
+			if (other.data != null)
 				return false;
-		} else if (!dataEntrada.equals(other.dataEntrada))
+		} else if (!data.equals(other.data))
 			return false;
 		if (id == null) {
 			if (other.id != null)

@@ -1,7 +1,9 @@
 package br.com.posweb.merceariapro.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.com.posweb.merceariapro.models.EntradaProduto;
 import br.com.posweb.merceariapro.models.Produto;
 import br.com.posweb.merceariapro.repositorios.ProdutoRepositorio;
 
@@ -40,6 +44,20 @@ public class ProdutosController {
 		return "produtos/form";
 	}
 
+	@RequestMapping(value="/produtos/salvar", params = {"addEntrada"})
+	public String addEntrada(Produto produto, BindingResult bindingResult) {
+		produto.addEntrada(new EntradaProduto());
+		return "produtos/form";
+	}
+	
+	@RequestMapping(value="/produtos/salvar", params = {"removerEntrada"})
+	public String removerEntrada(Produto produto, BindingResult bindingResult, HttpServletRequest req) {
+		final Integer itemIndex = Integer.valueOf(req.getParameter("removerEntrada"));
+		
+		produto.removerEntrada(itemIndex.intValue());
+		return "produtos/form";
+	}
+	
 	@GetMapping("/produtos/{id}")
 	public String alterar(@PathVariable("id") long id, Model model) {
 		Optional<Produto> produtoOpt = produtoRepositorio.findById(id);
@@ -58,7 +76,7 @@ public class ProdutosController {
 		if (bindingResult.hasErrors()) {
 			return "produtos/form";
 		}
-
+	
 		produtoRepositorio.save(produto);
 		return "redirect:/produtos";
 	}
