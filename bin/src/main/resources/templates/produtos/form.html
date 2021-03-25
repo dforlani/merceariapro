@@ -8,37 +8,31 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
 	crossorigin="anonymous">
-	
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<script
-  src="https://code.jquery.com/jquery-3.5.1.js"
-  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous"></script>
-<script
-  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
-  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
-  crossorigin="anonymous"></script>
-  
-<script type="text/javascript">
+
+
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+	integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+	crossorigin="anonymous"></script>
+
+<script>
 	$(function() {
-		$("#nomeCidade").autocomplete({
-			source: "cidadesNomeAutoComplete", 
-			minLength: 3,
-			select: function(event, ui) {
-				this.value = ui.item.label;
-				$("#idCidade").val(ui.item.value);
-				return false;
-			}
-		});
-		
-		$("#nomeDepartamento").autocomplete({
-			source: "departamentosNomeAutoComplete", 
-			minLength: 3,
-			select: function(event, ui) {
-				this.value = ui.item.label;
-				$("#idDepartamento").val(ui.item.value);
-				return false;
+
+		$(".callConfirm").on("click", function(e) {
+
+			if (!confirm("Deseja realmente remover esse item?")) {
+				e.preventDefault();
 			}
 		});
 	});
@@ -47,25 +41,85 @@
 </head>
 <body>
 	<div th:replace="fragments/header :: header"></div>
-	<div class="container my-2">
-	
-	
-		<h2>Editar Produtos</h2>
-		<form action="#" th:action="@{/produtos/salvar}" th:object="${produto}" method="POST">
-			<input type="hidden" id="id" th:field="*{id}">
-			
-			<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="text-danger"></span>
-			<input type="text" th:field="*{nome}" placeholder="Nome" class="form-control mb-4 col-4">
-      	
-      		
-      		<span th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}" class="text-danger"></span>
-      		<input type="text" th:field="*{valor}" placeholder="Valor" class="form-control mb-4 col-4">
-      		
-			
-			<button type="submit" class="btn btn-info col-2">Salvar</button>
-		</form>
-		<hr>
-		<a th:href="@{/produtos}">Retornar para a lista de produtos</a>
+	<div class="container my-5">
+		<h2>Editar Produto</h2>
+		<div class="card">
+			<div class="card-body">
+				<div class="col-md-15">
+					<form action="#" th:action="@{/produtos/salvar}"
+						th:object="${produto}" method="post">
+						<div class="row">
+							<input type="hidden" id="id" th:field="*{id}" /> <input
+								type="hidden" id="id" th:field="*{id}" />
+							<div class="col-md-4">
+								<input type="text"
+									th:field="*{nome}" placeholder="Nome" class="form-control" />
+									<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"
+									class="text-danger"></span> 
+							</div>
+							<div class="col-md-2">
+								 <input type="text"
+									th:field="*{valor}" placeholder="Valor" class="form-control" />
+									<span th:if="${#fields.hasErrors('valor')}" th:errors="*{valor}"
+									class="text-danger"></span>
+							</div>
+							<div class="col-md-4">
+								<input type="submit" class="btn btn-primary"
+									value="Salvar Produto" />
+							</div>
+							<div class="form-group col-md-10"></div>
+						</div>
+
+						<div class="table-responsive">
+							<h3>Entradas</h3>
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Quantidade</th>
+										<th scope="col">Data da Entrada</th>
+										<th scope="col"><button type="submit" name="addEntrada"
+												class="btn btn-outline-light">
+												<i class="fas fa-plus-circle"></i>
+											</button></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="entrada,entradaStat : *{entradas}">
+										<th scope="row" th:text="${entradaStat.count}"><input
+											type="hidden"
+											th:field="*{entradas[__${entradaStat.index}__].id}" /></th>
+
+										<td><input type="text"
+											th:field="*{entradas[__${entradaStat.index}__].quantidade}" /><br>
+											<span
+											th:errors="*{entradas[__${entradaStat.index}__].quantidade}"
+											class="text-danger"></span></td>
+
+										<td><div class="form-group col-md-12">
+												<input type="date"
+													th:field="*{entradas[__${entradaStat.index}__].data}"
+													class="form-control" id="data" placeholder="Data Entrada">
+												<span th:errors="*{entradas[__${entradaStat.index}__].data}"
+													class="text-danger"></span>
+											</div></td>
+
+										<td>
+											<button type="submit" name="removerEntrada"
+												th:value="${entradaStat.index}"
+												class="btn btn-danger callConfirm">
+												<i class="fas fa-minus-square"></i>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
