@@ -36,7 +36,7 @@ public class EntradaProduto {
 	@Column(name = "data_entrada")
 	private Date dataEntrada;
 
-	//get eeee
+	//get eeeedfgdf
 	public Long getId() {   
 		return id;
 	}
