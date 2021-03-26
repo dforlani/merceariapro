@@ -38,7 +38,7 @@ public class PopulacaoInicialProduto implements CommandLineRunner {
 		
 
 		//INCLUSÃO AUTOMÁTICA DE PRODUTOS 
-		Produto prodAux = new Produto("Coca-Cola", new BigDecimal(1.89));
+		Produto prodAux = new Produto("Coca-Cola", new BigDecimal(1.80));
 		List<EntradaProduto> listaEntradas = new ArrayList<>();
 		listaEntradas.add(new EntradaProduto(new BigDecimal(15.10), LocalDate.now()));
 		listaEntradas.add(new EntradaProduto(new BigDecimal(17.10), LocalDate.now()));
