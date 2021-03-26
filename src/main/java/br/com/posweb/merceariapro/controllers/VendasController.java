@@ -108,7 +108,7 @@ public class VendasController {
 
 		if (!(vendaOpt.isEmpty()) && !produtoOpt.isEmpty()) {
 			vendaItem.setProduto(produtoOpt.get());
-			vendaItem.setvenda(vendaOpt.get());
+			vendaItem.setVenda(vendaOpt.get());
 
 			vendaItemRepositorio.save(vendaItem);
 		} else {

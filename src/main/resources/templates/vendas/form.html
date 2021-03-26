@@ -29,6 +29,7 @@
 				select: function (event, ui) {
 					this.value = ui.item.label;
 					$("#produtoId").val(ui.item.value);
+					console.log(ui.item);
 					return false;
 				},
 			});

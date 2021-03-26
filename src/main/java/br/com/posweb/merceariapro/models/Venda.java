@@ -37,7 +37,7 @@ public class Venda {
     @OneToMany(
         cascade = CascadeType.ALL,
         orphanRemoval = true,
-        mappedBy = "pedido",
+        mappedBy = "venda",
         fetch = FetchType.LAZY
     )
     // @JoinColumn(name = "pedido_id")

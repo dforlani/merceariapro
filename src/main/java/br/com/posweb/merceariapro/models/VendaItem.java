@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "pedido_item")
+@Table(name = "venda_item")
 public class VendaItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,8 +23,8 @@ public class VendaItem {
     private Produto produto;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id")
-    private Venda pedido;
+    @JoinColumn(name = "venda_id")
+    private Venda venda;
 
 
     public Long getId() {
@@ -82,15 +82,19 @@ public class VendaItem {
     }
 
 
-    public Venda getPedido() {
-        return pedido;
-    }
+ 
 
-    public void setPedido(Venda pedido) {
-        this.pedido = pedido;
-    }
+    public Venda getVenda() {
+		return venda;
+	}
 
-    public Produto getProduto() {
+
+	public void setVenda(Venda venda) {
+		this.venda = venda;
+	}
+
+
+	public Produto getProduto() {
         return produto;
     }
 
@@ -98,15 +102,15 @@ public class VendaItem {
         this.produto = produto;
     }
 
-    public VendaItem(int quantidade, Produto produto, Venda pedido) {
+    public VendaItem(int quantidade, Produto produto, Venda venda) {
         this.quantidade = quantidade;
         this.produto = produto;
-        this.pedido = pedido;
+        this.venda = venda;
    
     }
 
-    public VendaItem(Venda pedido) {
-        this.pedido = pedido;
+    public VendaItem(Venda venda) {
+        this.venda = venda;
 
     }
 
