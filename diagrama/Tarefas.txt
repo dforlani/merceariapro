@@ -1,0 +1,23 @@
+- Criar repositório no Github: Diogo
+
+Planejamento:
+
+- Documento explicando os requisitos da aplicação: André (pode ser feito depois que terminarmos)
+- Criar o Diagrama de Entidade e Relacionamento: Diogo
+
+Implementação
+- Incluir arquivo LEIAME: André (pode ser feito depois que terminarmos)
+- Segurança e Controle de Acesso: André
+- Criar CRUD Produtos: Diogo
+- Criar CRUD Clientes: André 
+- Criar CRUD Vendas: Diogo
+- Criar Relatórios de Estoque: Diogo
+- Implementar testes Automatizados: Diogo (opcional)
+- Fazer o deploy da aplicação na nuvem: André (opcional)
+
+
+
+
+(Add + Commit + Pull + Push)
+
+Atualizar projeto no GitHub: Team > Add to Index > Commit > Pull > Push

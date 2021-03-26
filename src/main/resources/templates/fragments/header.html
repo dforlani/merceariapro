@@ -7,7 +7,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light"
 		th:fragment="header">
-		<a class="navbar-brand" href="#">Mercearia Pro</a>
+		<a class="navbar-brand" href="http://localhost:8080/"><strong>Mercearia Pro</strong></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#conteudoNavbarSuportado"
 			aria-controls="conteudoNavbarSuportado" aria-expanded="false"
@@ -17,14 +17,18 @@
 
 		<div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
 			<ul class="navbar-nav mr-auto">
+				
+				<li class="nav-item active"><a class="nav-link"
+					th:href="@{/clientes}">Clientes <span class="sr-only">(página
+							atual)</span></a></li>
+				<li class="nav-item active"><a class="nav-link"
+					th:href="@{/produtos}">Produtos <span class="sr-only">(página
+							atual)</span></a></li>
 				<li class="nav-item active"><a class="nav-link"
 					th:href="@{/pedidos}">Pedidos <span class="sr-only">(página
 							atual)</span></a></li>
 				<li class="nav-item active"><a class="nav-link"
-					th:href="@{/rh/pessoas}">Clientes <span class="sr-only">(página
-							atual)</span></a></li>
-				<li class="nav-item active"><a class="nav-link"
-					th:href="@{/produtos}">Produtos <span class="sr-only">(página
+					th:href="@{/vendas}">Vendas <span class="sr-only">(página
 							atual)</span></a></li>
 
 			</ul>
