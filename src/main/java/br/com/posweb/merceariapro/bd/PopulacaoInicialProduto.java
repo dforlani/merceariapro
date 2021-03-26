@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 
 import br.com.posweb.merceariapro.models.EntradaProduto;
 import br.com.posweb.merceariapro.models.Produto;
+import br.com.posweb.merceariapro.models.Venda;
+import br.com.posweb.merceariapro.models.VendaItem;
 
 
 
@@ -25,6 +27,8 @@ import br.com.posweb.merceariapro.models.Produto;
 public class PopulacaoInicialProduto implements CommandLineRunner {
 
 
+	@Autowired
+	private br.com.posweb.merceariapro.repositorios.VendaRepositorio vendaRepositorio;
 	@Autowired
 	private br.com.posweb.merceariapro.repositorios.ProdutoRepositorio produtoRep;
 
@@ -59,6 +63,15 @@ public class PopulacaoInicialProduto implements CommandLineRunner {
 		prodAux = new Produto("Sabonete", new BigDecimal(2.35));
 		produtoRep.save(prodAux);
 		produtoRep.flush();
+		
+		//INCLUSÃO AUTOMÁTICA DE VENDAS
+		Venda venda = new Venda(LocalDateTime.now());
+		List<Produto> produtos = produtoRep.findAll();
+		VendaItem vendaItem = new VendaItem(10, produtos.get(0), venda);		
+		venda.addItemVenda(vendaItem);
+		
+		vendaRepositorio.save(venda);	
+		vendaRepositorio.flush();
 
 	}
 }
