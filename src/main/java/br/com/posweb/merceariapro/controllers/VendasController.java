@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.posweb.merceariapro.dtos.AutoCompleteDTO;
+import br.com.posweb.merceariapro.dtos.AutoCompleteDTOVendas;
+import br.com.posweb.merceariapro.models.EntradaProduto;
 import br.com.posweb.merceariapro.models.Produto;
 import br.com.posweb.merceariapro.models.Venda;
 import br.com.posweb.merceariapro.models.VendaItem;
@@ -55,14 +58,40 @@ public class VendasController {
 		return "vendas/index";
 	}
 
-	@GetMapping("/vendas/novo")
-	public String novo(Model model) {
+	@PostMapping("/vendas/venda")
+	public String venda(Model model) {
+		Venda venda = new Venda(LocalDateTime.now());
+		vendaRepositorio.save(venda);
+		venda.addItemVenda(new VendaItem(1, venda, true));
 
-		model.addAttribute("venda", new Venda(LocalDateTime.now()));
+		model.addAttribute("venda", venda);
 
 		return "vendas/form";
 	}
 
+	@PostMapping(value="/vendas/venda/{id}", params = {"addItem"})
+	public String addItem(@PathVariable("id") long id, Model model,   Venda venda) {
+	
+		List<VendaItem> itensOriginais = new ArrayList<>();
+		
+		Optional<Venda> optional=		vendaRepositorio.findById(venda.getId());
+		if(!optional.isEmpty()) {
+			itensOriginais = optional.get().getItens();
+		}
+		
+		itensOriginais.addAll(venda.getItens());
+		venda.setItens(itensOriginais);
+		vendaRepositorio.save(venda);
+		
+		vendaRepositorio.flush();
+		venda.addItemVenda(new VendaItem(1, venda, true));
+
+		model.addAttribute("venda", venda);
+
+		return "vendas/form";
+	}
+	
+	
 	@GetMapping("/vendas/{id}")
 	public String alterar(@PathVariable("id") long id, Model model) {
 		Optional<Venda> vendaOpt = vendaRepositorio.findById(id);
@@ -84,18 +113,20 @@ public class VendasController {
 		return "vendas/form";
 	}
 
-	@PostMapping("/vendas/salvar")
-	public String salvar(@Valid @ModelAttribute("venda") Venda venda, BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) {
-			return "vendas/index";
-		}
-		venda.setData(LocalDateTime.now());
-		vendaRepositorio.save(venda);
-		model.addAttribute("venda", venda);
-		model.addAttribute("vendaItem", new VendaItem(venda));
-		return "redirect:/vendas/"+venda.getId();
-	}
+//	@PostMapping("/vendas/salvar")
+//	public String salvar(@Valid @ModelAttribute("venda") Venda venda, BindingResult bindingResult, Model model) {
+//		if (bindingResult.hasErrors()) {
+//			return "vendas/index";
+//		}
+//		venda.setData(LocalDateTime.now());
+//		vendaRepositorio.save(venda);
+//		model.addAttribute("venda", venda);
+//		model.addAttribute("vendaItem", new VendaItem(venda));
+//		return "redirect:/vendas/"+venda.getId();
+//	}
 
+
+	
 	@PostMapping("/vendas/{vendaId}/adicionarItem")
 	public String adicionarItem(@PathVariable("vendaId") Long vendaId, @RequestParam("produtoId") Long produtoId,
 			@ModelAttribute("vendaItem") VendaItem vendaItem, Model model) {
@@ -117,6 +148,28 @@ public class VendasController {
 
 		return "redirect:/vendas/" + vendaId;
 	}
+	
+//	@PostMapping("/vendas/{vendaId}/adicionarItem")
+//	public String adicionarItem(@PathVariable("vendaId") Long vendaId, @RequestParam("produtoId") Long produtoId,
+//			@ModelAttribute("vendaItem") VendaItem vendaItem, Model model) {
+//		// if (bindingResult.hasErrors()) {
+//		// return "vendas/form";
+//		// }
+//
+//		Optional<Venda> vendaOpt = vendaRepositorio.findById(vendaId);
+//		Optional<Produto> produtoOpt = produtoRepositorio.findById(produtoId);
+//
+//		if (!(vendaOpt.isEmpty()) && !produtoOpt.isEmpty()) {
+//			vendaItem.setProduto(produtoOpt.get());
+//			vendaItem.setVenda(vendaOpt.get());
+//
+//			vendaItemRepositorio.save(vendaItem);
+//		} else {
+//			vendaItem = new VendaItem();
+//		}
+//
+//		return "redirect:/vendas/" + vendaId;
+//	}
 
 	@GetMapping("/vendas/excluir/{id}")
 	public String excluir(@PathVariable("id") long id) {
@@ -145,9 +198,9 @@ public class VendasController {
 
 	@RequestMapping("/vendas/produtosNomeAutoComplete")
 	@ResponseBody
-	public List<AutoCompleteDTO> produtosNomeAutoComplete(
+	public List<AutoCompleteDTOVendas> produtosNomeAutoComplete(
 			@RequestParam(value = "term", required = false, defaultValue = "") String term) {
-		List<AutoCompleteDTO> sugestoes = new ArrayList<>();
+		List<AutoCompleteDTOVendas> sugestoes = new ArrayList<>();
 		try {
 			if (term.length() >= 2) {
 				produtosFiltrados = produtoRepositorio.searchByNome(term);
@@ -155,7 +208,7 @@ public class VendasController {
 
 			for (Produto produto : produtosFiltrados) {
 				if (produto.getNome().toLowerCase().contains(term.toLowerCase())) {
-					sugestoes.add(new AutoCompleteDTO(produto.getNome(), Long.toString(produto.getId())));
+					sugestoes.add(new AutoCompleteDTOVendas(produto.getNome(), Long.toString(produto.getId()), produto.getValor().toString()));
 				}
 			}
 

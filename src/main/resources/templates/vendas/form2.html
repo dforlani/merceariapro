@@ -28,20 +28,18 @@
 			}
 		});
 
-		$("#nomeProduto").autocomplete(
-				{
-					source : "/vendas/produtosNomeAutoComplete",
-					minLength : 0,
-					select : function(event, ui) {
-						this.value = ui.item.label;
-						$("#produtoId").val(ui.item.value);
-						$("#produtoPrecoUnitario").val(ui.item.valor);
-						$("#produtoPrecoTotal").val(
-								ui.item.valor * $("#quantidade").val());
-						console.log(ui.item);
-						return false;
-					},
-				});
+		$("#nomeProduto").autocomplete({
+			source : "/vendas/produtosNomeAutoComplete",
+			minLength : 0,
+			select : function(event, ui) {
+				this.value = ui.item.label;
+				$("#produtoId").val(ui.item.value);
+				$("#produtoPrecoUnitario").val(ui.item.valor);
+				$("#produtoPrecoTotal").val(ui.item.valor * $("#quantidade").val());
+				console.log(ui.item);
+				return false;
+			},
+		});
 	});
 </script>
 </head>
@@ -59,7 +57,8 @@
 		<div class="card">
 			<div class="card-header">Novo Item</div>
 			<div class="card-body">
-				<form action="#" th:action="@{/vendas/venda/}+${venda.id}"
+				<form action="#"
+					th:action="@{/vendas/}+${venda.id}+@{/adicionarItem}"
 					th:object="${venda}" method="POST">
 					<input type="hidden" id="id" th:field="*{id}" />
 
@@ -67,42 +66,41 @@
 
 					<div class="row">
 						<div class="col-sm-3" style="text-align: left">
-							<label>Produto</label> <span th:errors="*{itens[0].produto}"
+							<label>Produto</label> <span
+								
+								 th:errors="*{itens[0].produto}"
 								class="text-danger"></span> <input id="nomeProduto" type="text"
 								th:field="*{itens[0].produto.nome}" placeholder="Produto"
-								class="form-control mb-12 col-12" /> 
-								
-								<input id="produtoId" type="hidden" th:field="*{itens[0].produto}" />
-								<input th:field="*{itens[0].venda}" />
-								
-
+								class="form-control mb-12 col-12" /> <input name="produtoId"
+								id="produtoId" type="hidden" class="form-control mb-4 col-4" />
 						</div>
 
 						<div class="col-sm-2" style="text-align: left">
-							<span th:errors="*{itens[0].quantidade}" class="text-danger"></span>
-							<label>Quantidade</label> <input type="text"
-								th:field="*{itens[0].quantidade}" placeholder="Quantidade"
-								class="form-control mb-12 col-12" />
-						 
+							<span 
+							
+								th:errors="*{itens[0].quantidade}" class="text-danger"></span> <label>Quantidade</label>
+							<input type="text" th:field="*{itens[0].quantidade}"
+								placeholder="Quantidade" class="form-control mb-12 col-12" />
 						</div>
-
+						
 						<div class="col-sm-2" style="text-align: left">
-							<label>Preço Unitário</label> <input type="text"
-								th:field="*{itens[0].precoUnitario}"
-								th:id="produtoPrecoUnitario" placeholder="Preço Unitário"
-								class="form-control mb-12 col-12" />
+							 <label>Preço Unitário</label>
+							<input type="text" th:field="*{itens[0].precoUnitario}" th:id="produtoPrecoUnitario"
+								placeholder="Preço Unitário" class="form-control mb-12 col-12" />
 						</div>
-
+						
 						<div class="col-sm-2" style="text-align: left">
-							<span th:errors="*{itens[0].precoTotal}" class="text-danger"></span>
-							<label>Preço Total</label> <input type="text"
-								th:field="*{itens[0].precoTotal}" th:id="produtoPrecoTotal"
+						<span
+						
+								th:errors="*{itens[0].precoTotal}" class="text-danger"></span>
+							 <label>Preço Total</label>
+							<input type="text" th:field="*{itens[0].precoTotal}" th:id="produtoPrecoTotal"
 								placeholder="Preço Total" class="form-control mb-12 col-12" />
 						</div>
-
+						
 						<div class="col-sm-6" style="text-align: left">
 							<br />
-							<button type="submit" class="btn btn-info" name="addItem">Adicionar</button>
+							<button type="submit" class="btn btn-info">Adicionar</button>
 						</div>
 					</div>
 				</form>
@@ -123,8 +121,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="item : ${venda.itensPersistidos}">
-					<td th:text="${item.id}"></td>
+				<tr th:each="item : ${venda.itensSalvos}">
 					<td th:text="${item.produto.nome}"></td>
 					<td th:text="${item.quantidade}"></td>
 					<td th:text="${item.precoUnitario}"></td>
