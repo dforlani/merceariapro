@@ -24,7 +24,7 @@
 			});
 
 			$("#nomeProduto").autocomplete({
-				source: "/pedidos/produtosNomeAutoComplete",
+				source: "/vendas/produtosNomeAutoComplete",
 				minLength: 0,
 				select: function (event, ui) {
 					this.value = ui.item.label;
@@ -41,11 +41,9 @@
 	<div class="container my-2">
 		<h1>Caixa</h1>
 
+		
 		<h2 th:inline="text" style="color: blue">
-			Cliente: [[${pedido.getNomePessoa()}]]
-		</h2>
-		<h2 th:inline="text" style="color: blue">
-			Data: [[${#temporals.format(pedido.getData(), 'dd/MM/yyyy HH:mm')}]]
+			Data: [[${#temporals.format(venda.getData(), 'dd/MM/yyyy HH:mm')}]]
 		</h2>
 		<br />
 
@@ -54,11 +52,11 @@
 			  Novo Item
 			</div>
 			<div class="card-body">
-				<form action="#" th:action="@{/pedidos/}+${pedido.id}+@{/adicionarItem}" th:object="${pedidoItem}"
+				<form action="#" th:action="@{/vendas/}+${venda.id}+@{/adicionarItem}" th:object="${vendaItem}"
 					method="POST">
 					<input type="hidden" id="id" th:field="*{id}" />
 
-					<input type="hidden" id="pedido" th:field="*{pedido}" />
+					
 
 					<div class="row">
 						<div class="col-sm-3" style="text-align: left">
@@ -103,14 +101,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="item : ${pedido.itens}">
+				<tr th:each="item : ${venda.itens}">
 					<td th:text="${item.produto.nome}"></td>
 					<td th:text="${item.quantidade}"></td>
 					<td th:text="${item.produto.valor}"></td>
 					<td th:text="${item.produto.valor * item.quantidade}"></td>
 
 					<td>
-						<a th:href="@{/pedidos/}+${pedido.id}+@{/excluirItem/{id}(id=${item.id})}"
+						<a th:href="@{/vendas/}+${venda.id}+@{/excluirItem/{id}(id=${item.id})}"
 							class="btn btn-danger callConfirm">Excluir</a>
 					</td>
 				</tr>
@@ -118,7 +116,7 @@
 		</table>
 		<hr />
 		<h1 th:inline="text">Total dos Itens: [[${total}]]</h1>
-		<a th:href="@{/pedidos}">Retornar para a lista de pedidos</a>
+		<a th:href="@{/vendas}">Retornar para a lista de vendas</a>
 	</div>
 </body>
 

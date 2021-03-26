@@ -31,114 +31,114 @@ import br.com.posweb.merceariapro.repositorios.VendaRepositorio;
 @Controller
 public class VendasController {
 
-	private VendaRepositorio pedidoRepositorio;
-	private VendaItemRepositorio pedidoItemRepositorio;	
+	private VendaRepositorio vendaRepositorio;
+	private VendaItemRepositorio vendaItemRepositorio;	
 	private ProdutoRepositorio produtoRepositorio;
 
 	
 	private List<Produto> produtosFiltrados = new ArrayList<>();
 	
 
-	public VendasController(VendaRepositorio pedidoRepositorio, VendaItemRepositorio pedidoItemRepositorio,
+	public VendasController(VendaRepositorio vendaRepositorio, VendaItemRepositorio vendaItemRepositorio,
 			 ProdutoRepositorio produtoRepositorio) {
-		this.pedidoRepositorio = pedidoRepositorio;
+		this.vendaRepositorio = vendaRepositorio;
 		this.produtoRepositorio = produtoRepositorio;
-		this.pedidoItemRepositorio = pedidoItemRepositorio;
+		this.vendaItemRepositorio = vendaItemRepositorio;
 
 	}
 
 	@GetMapping("/vendas")
 	public String vendas(Model model) {
-		List<Venda> vendas = pedidoRepositorio.findAll();		
-		model.addAttribute("listavendas", vendas);
-		model.addAttribute("pedido", new Venda());
+		List<Venda> vendas = vendaRepositorio.findAll();		
+		model.addAttribute("listaVendas", vendas);
+		model.addAttribute("venda", new Venda());
 		return "vendas/index";
 	}
 
 	@GetMapping("/vendas/novo")
 	public String novo(Model model) {
 
-		model.addAttribute("pedido", new Venda(LocalDateTime.now()));
+		model.addAttribute("venda", new Venda(LocalDateTime.now()));
 
 		return "vendas/form";
 	}
 
 	@GetMapping("/vendas/{id}")
 	public String alterar(@PathVariable("id") long id, Model model) {
-		Optional<Venda> pedidoOpt = pedidoRepositorio.findById(id);
-		if (pedidoOpt.isEmpty()) {
-			throw new IllegalArgumentException("Pedido inválido.");
+		Optional<Venda> vendaOpt = vendaRepositorio.findById(id);
+		if (vendaOpt.isEmpty()) {
+			throw new IllegalArgumentException("venda inválido.");
 		}
 
 		BigDecimal total = new BigDecimal(0);
-		for (VendaItem item : pedidoOpt.get().getItens()) {
+		for (VendaItem item : vendaOpt.get().getItens()) {
 			total = total.add(item.getProduto().getValor().multiply(new BigDecimal(item.getQuantidade())));			
 			
 		}
 		
 
 		model.addAttribute("total", total);
-		model.addAttribute("pedido", pedidoOpt.get());
-		model.addAttribute("pedidoItem", new VendaItem(1));
+		model.addAttribute("venda", vendaOpt.get());
+		model.addAttribute("vendaItem", new VendaItem(1));
 
 		return "vendas/form";
 	}
 
 	@PostMapping("/vendas/salvar")
-	public String salvar(@Valid @ModelAttribute("pedido") Venda pedido, BindingResult bindingResult, Model model) {
+	public String salvar(@Valid @ModelAttribute("venda") Venda venda, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			return "vendas/index";
 		}
-		pedido.setData(LocalDateTime.now());
-		pedidoRepositorio.save(pedido);
-		model.addAttribute("pedido", pedido);
-		model.addAttribute("pedidoItem", new VendaItem(pedido));
-		return "redirect:/vendas/"+pedido.getId();
+		venda.setData(LocalDateTime.now());
+		vendaRepositorio.save(venda);
+		model.addAttribute("venda", venda);
+		model.addAttribute("vendaItem", new VendaItem(venda));
+		return "redirect:/vendas/"+venda.getId();
 	}
 
-	@PostMapping("/vendas/{pedidoId}/adicionarItem")
-	public String adicionarItem(@PathVariable("pedidoId") Long pedidoId, @RequestParam("produtoId") Long produtoId,
-			@ModelAttribute("pedidoItem") VendaItem pedidoItem, Model model) {
+	@PostMapping("/vendas/{vendaId}/adicionarItem")
+	public String adicionarItem(@PathVariable("vendaId") Long vendaId, @RequestParam("produtoId") Long produtoId,
+			@ModelAttribute("vendaItem") VendaItem vendaItem, Model model) {
 		// if (bindingResult.hasErrors()) {
 		// return "vendas/form";
 		// }
 
-		Optional<Venda> pedidoOpt = pedidoRepositorio.findById(pedidoId);
+		Optional<Venda> vendaOpt = vendaRepositorio.findById(vendaId);
 		Optional<Produto> produtoOpt = produtoRepositorio.findById(produtoId);
 
-		if (!(pedidoOpt.isEmpty()) && !produtoOpt.isEmpty()) {
-			pedidoItem.setProduto(produtoOpt.get());
-			pedidoItem.setPedido(pedidoOpt.get());
+		if (!(vendaOpt.isEmpty()) && !produtoOpt.isEmpty()) {
+			vendaItem.setProduto(produtoOpt.get());
+			vendaItem.setvenda(vendaOpt.get());
 
-			pedidoItemRepositorio.save(pedidoItem);
+			vendaItemRepositorio.save(vendaItem);
 		} else {
-			pedidoItem = new VendaItem();
+			vendaItem = new VendaItem();
 		}
 
-		return "redirect:/vendas/" + pedidoId;
+		return "redirect:/vendas/" + vendaId;
 	}
 
 	@GetMapping("/vendas/excluir/{id}")
 	public String excluir(@PathVariable("id") long id) {
-		Optional<Venda> pedidoOpt = pedidoRepositorio.findById(id);
-		if (pedidoOpt.isEmpty()) {
-			throw new IllegalArgumentException("Pedido inválido.");
+		Optional<Venda> vendaOpt = vendaRepositorio.findById(id);
+		if (vendaOpt.isEmpty()) {
+			throw new IllegalArgumentException("venda inválido.");
 		}
 
-		pedidoRepositorio.delete(pedidoOpt.get());
+		vendaRepositorio.delete(vendaOpt.get());
 		return "redirect:/vendas";
 	}
 
-	@GetMapping("/vendas/{idPedido}/excluirItem/{idPedidoItem}")
-	public String excluirItem(@PathVariable("idPedido") long idPedido,
-			@PathVariable("idPedidoItem") Long idPedidoItem) {
-		Optional<VendaItem> peditoItemOpt = pedidoItemRepositorio.findById(idPedidoItem);
+	@GetMapping("/vendas/{idvenda}/excluirItem/{idvendaItem}")
+	public String excluirItem(@PathVariable("idvenda") long idvenda,
+			@PathVariable("idvendaItem") Long idvendaItem) {
+		Optional<VendaItem> peditoItemOpt = vendaItemRepositorio.findById(idvendaItem);
 		if (peditoItemOpt.isEmpty()) {
-			throw new IllegalArgumentException("Pedido Item inválido.");
+			throw new IllegalArgumentException("venda Item inválido.");
 		}
 
-		pedidoItemRepositorio.delete(peditoItemOpt.get());
-		return "redirect:/vendas/" + idPedido;
+		vendaItemRepositorio.delete(peditoItemOpt.get());
+		return "redirect:/vendas/" + idvenda;
 	}
 
 

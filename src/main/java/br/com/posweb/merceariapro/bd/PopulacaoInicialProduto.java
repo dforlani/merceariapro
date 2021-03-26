@@ -56,7 +56,7 @@ public class PopulacaoInicialProduto implements CommandLineRunner {
 
 		prodAux = new Produto("Barra de Chocolate Nestlê",new BigDecimal( 7.02));
 		listaEntradas = new ArrayList<>();
-		listaEntradas.add(new EntradaProduto(new BigDecimal(8.10), LocalDate.now()));
+		listaEntradas.add(new EntradaProduto(new BigDecimal(8.1), LocalDate.now()));
 		prodAux.setEntradas(listaEntradas);		
 		produtoRep.save(prodAux);
 

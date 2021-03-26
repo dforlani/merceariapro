@@ -25,7 +25,7 @@
 			});
 
     $("#nomePessoa").autocomplete({
-      source: "pedidos/pessoasNomeAutoComplete",
+      source: "vendas/pessoasNomeAutoComplete",
       minLength: 0,
       select: function (event, ui) {
         this.value = ui.item.label;
@@ -41,7 +41,7 @@
   <div class="container my-2">
 
 
-    <form action="#" th:action="@{/pedidos/salvar}" th:object="${pedido}" method="POST">
+    <form action="#" th:action="@{/venda/salvar}" th:object="${venda}" method="POST">
       <input type="hidden" id="id" th:field="*{id}" />
 
 
@@ -55,25 +55,25 @@
       </div>
     </form>
 
-    <h1>Pedidos</h1>
+    <h1>Vendas</h1>
     <table border="1" class="table table-striped table-responsive-md">
       <thead>
         <tr>
-          <th>Cliente</th>
+          
           <th>Data</th>
 
           <th>Ações</th>
         </tr>
       </thead>
       <tbody>
-        <tr th:each="pedido : ${listaPedidos}">
-          <td th:text="${pedido.nomePessoa}"></td>
+        <tr th:each="venda : ${listaVendas}">
           
-          <td th:text="${#temporals.format(pedido.getData(), 'dd/MM/yyyy HH:mm')}"></td>
+          
+          <td th:text="${#temporals.format(venda.getData(), 'dd/MM/yyyy HH:mm')}"></td>
 
           <td>
-            <a th:href="@{/pedidos/{id}(id=${pedido.id})}" class="btn btn-primary">Alterar</a>
-            <a th:href="@{/pedidos/excluir/{id}(id=${pedido.id})}" class="btn btn-danger callConfirm">Excluir</a>
+            <a th:href="@{/vendas/{id}(id=${venda.id})}" class="btn btn-primary">Alterar</a>
+            <a th:href="@{/vendas/excluir/{id}(id=${venda.id})}" class="btn btn-danger callConfirm">Excluir</a>
           </td>
         </tr>
       </tbody>
