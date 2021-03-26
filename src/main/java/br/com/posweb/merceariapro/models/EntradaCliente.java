@@ -1,6 +1,5 @@
 package br.com.posweb.merceariapro.models;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -20,16 +19,16 @@ public class EntradaCliente {
 	public EntradaCliente() {
 	}
 
-	public EntradaCliente(BigDecimal quantidade, LocalDate data) {
+	public EntradaCliente(String cidade, LocalDate data) {
 		super();
-		this.quantidade = quantidade;
+		this.cidade = cidade;
 		this.data = data;
 	}
 
-	public EntradaCliente(Long id, BigDecimal quantidade, LocalDate data) {
+	public EntradaCliente(Long id, String cidade, LocalDate data) {
 		super();
 		this.id = id;
-		this.quantidade = quantidade;
+		this.cidade = cidade;
 		this.data = data;
 	}
 
@@ -42,7 +41,7 @@ public class EntradaCliente {
 
 	@Column(nullable = false)
 	@NotNull
-	private BigDecimal quantidade;
+	private String cidade;
 
 	@Column(name = "data")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -66,12 +65,12 @@ public class EntradaCliente {
 		this.id = id;
 	}
 
-	public BigDecimal getQuantidade() {
-		return quantidade;
+	public String getCidade() {
+		return cidade;
 	}
 
-	public void setQuantidade(BigDecimal quantidade) {
-		this.quantidade = quantidade;
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 
 	public LocalDate getData() {
@@ -88,7 +87,7 @@ public class EntradaCliente {
 		int result = 1;
 		result = prime * result + ((data == null) ? 0 : data.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((quantidade == null) ? 0 : quantidade.hashCode());
+		result = prime * result + ((cidade == null) ? 0 : cidade.hashCode());
 		return result;
 	}
 
@@ -111,10 +110,10 @@ public class EntradaCliente {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (quantidade == null) {
-			if (other.quantidade != null)
+		if (cidade == null) {
+			if (other.cidade != null)
 				return false;
-		} else if (!quantidade.equals(other.quantidade))
+		} else if (!cidade.equals(other.cidade))
 			return false;
 		return true;
 	}

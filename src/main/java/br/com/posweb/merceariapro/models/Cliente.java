@@ -22,13 +22,13 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@NotBlank(message = "O campo nome do cliente não pode ser vazio")
+	@NotBlank(message = "O campo nome do 'cliente' não pode ser vazio")
 	@Column(nullable = false)
 	private String nome;
 
-	@NotNull(message = "O campo valor não pode ser vazio")
+	@NotBlank(message = "O campo 'cidade' não pode ser vazio")
 	@Column(nullable = false)	
-	private BigDecimal valor;
+	private String cidade;
 	
 
 
@@ -58,12 +58,12 @@ public class Cliente {
 		this.entradas = entradas;
 	}
 
-	public BigDecimal getValor() {
-		return valor;
+	public String getCidade() {
+		return cidade;
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 
 	@Override
@@ -71,10 +71,10 @@ public class Cliente {
 		return "Cliente [nome=" + nome + "]";
 	}
 
-	public Cliente(@NotBlank(message = "O campo nome do cliente não pode ser vazio") String nome,
-			@NotBlank(message = "O campo valor não pode ser vazio") BigDecimal valor) {
+	public Cliente(@NotBlank(message = "O campo 'nome' do cliente não pode ser vazio") String nome,
+			@NotBlank(message = "O campo 'cidade' não pode ser vazio") String cidade) {
 		this.nome = nome;
-		this.valor = valor;
+		this.cidade = cidade;
 	}
 	
 	public void addEntrada(EntradaCliente nova) {

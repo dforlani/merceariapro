@@ -32,29 +32,27 @@ public class PopulacaoInicialCliente implements CommandLineRunner {
 		
 
 		//INCLUSÃO AUTOMÁTICA DE PRODUTOS 
-		Cliente prodAux = new Cliente("Marcelo de Souza", new BigDecimal(1.89));
+		Cliente prodAux = new Cliente("Marcelo de Souza", new String("Paranavaí"));
 		List<EntradaCliente> listaEntradas = new ArrayList<>();
-		listaEntradas.add(new EntradaCliente(new BigDecimal(15.10), LocalDate.now()));
-		listaEntradas.add(new EntradaCliente(new BigDecimal(17.10), LocalDate.now()));
-		listaEntradas.add(new EntradaCliente(new BigDecimal(11.10), LocalDate.now()));
+		listaEntradas.add(new EntradaCliente(new String("Tamboara"), LocalDate.now()));
+		listaEntradas.add(new EntradaCliente(new String("Alto PR"), LocalDate.now()));
 		prodAux.setEntradas(listaEntradas);		
 		clienteRep.save(prodAux);
 
-		prodAux = new Cliente("Sergio Gomes", new BigDecimal(6.98));
+		prodAux = new Cliente("Sergio Gomes", new String("Carapicuíba"));
 		listaEntradas = new ArrayList<>();
-		listaEntradas.add(new EntradaCliente(new BigDecimal(9.10), LocalDate.now()));
-		listaEntradas.add(new EntradaCliente(new BigDecimal(7.10), LocalDate.now()));
-		listaEntradas.add(new EntradaCliente(new BigDecimal(1.10),LocalDate.now()));
+		listaEntradas.add(new EntradaCliente(new String("Osasco"), LocalDate.now()));
+		listaEntradas.add(new EntradaCliente(new String("Quitaúna"), LocalDate.now()));
 		prodAux.setEntradas(listaEntradas);		
 		clienteRep.save(prodAux);
 
-		prodAux = new Cliente("Laisa Minelli",new BigDecimal( 7.02));
+		prodAux = new Cliente("Laisa Minelli", new String("Curitiba"));
 		listaEntradas = new ArrayList<>();
-		listaEntradas.add(new EntradaCliente(new BigDecimal(8.10), LocalDate.now()));
+		listaEntradas.add(new EntradaCliente(new String("Portão"), LocalDate.now()));
 		prodAux.setEntradas(listaEntradas);		
 		clienteRep.save(prodAux);
 
-		prodAux = new Cliente("George Clooney", new BigDecimal(2.35));
+		prodAux = new Cliente("George Clooney", new String("Foz"));
 		clienteRep.save(prodAux);
 		clienteRep.flush();
 

@@ -37,14 +37,14 @@
       <thead>
         <tr>
           <th>Nome</th>
-          <th>Valor</th>
+          <th>Cidade</th>
           <th>Ações</th>
         </tr>
       </thead>
       <tbody>
         <tr th:each="cliente : ${listaClientes}">
           <td th:text="${cliente.nome}"></td>
-          <td th:text="${cliente.valor}"></td>
+          <td th:text="${cliente.cidade}"></td>
 
           <td>
             <a th:href="@{/clientes/{id}(id=${cliente.id})}" class="btn btn-primary ">Alterar</a>
