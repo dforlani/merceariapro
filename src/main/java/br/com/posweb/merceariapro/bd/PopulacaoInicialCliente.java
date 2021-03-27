@@ -32,28 +32,28 @@ public class PopulacaoInicialCliente implements CommandLineRunner {
 		
 
 		//INCLUSÃO AUTOMÁTICA DE PRODUTOS 
-		Cliente prodAux = new Cliente("Marcelo de Souza", new String("Paranavaí"));
+		Cliente cliAux = new Cliente("Marcelo de Souza", new String("Paranavaí"), new String("marcelosouza@mail.com"), new String("(44) 9.8706-5941"));
 		List<EntradaCliente> listaEntradas = new ArrayList<>();
-		listaEntradas.add(new EntradaCliente(new String("Tamboara"), LocalDate.now()));
-		listaEntradas.add(new EntradaCliente(new String("Alto PR"), LocalDate.now()));
-		prodAux.setEntradas(listaEntradas);		
-		clienteRep.save(prodAux);
+		//listaEntradas.add(new EntradaCliente(new String("")));
+		//listaEntradas.add(new EntradaCliente(new String(""), LocalDate.now()));
+		cliAux.setEntradas(listaEntradas);		
+		clienteRep.save(cliAux);
 
-		prodAux = new Cliente("Sergio Gomes", new String("Carapicuíba"));
+		cliAux = new Cliente("Sergio Gomes", new String("Carapicuíba"), new String("sergiogomes@mail.com"), new String("(11) 9.5906-8741"));
 		listaEntradas = new ArrayList<>();
-		listaEntradas.add(new EntradaCliente(new String("Osasco"), LocalDate.now()));
-		listaEntradas.add(new EntradaCliente(new String("Quitaúna"), LocalDate.now()));
-		prodAux.setEntradas(listaEntradas);		
-		clienteRep.save(prodAux);
+		//listaEntradas.add(new EntradaCliente(new String("Osasco"), LocalDate.now()));
+		//listaEntradas.add(new EntradaCliente(new String("Quitaúna"), LocalDate.now()));
+		cliAux.setEntradas(listaEntradas);		
+		clienteRep.save(cliAux);
 
-		prodAux = new Cliente("Laisa Minelli", new String("Curitiba"));
+		cliAux = new Cliente("Laisa Minelli", new String("Curitiba"), new String("laminelli@mail.com"), new String("(88) 9.2244-4188"));
 		listaEntradas = new ArrayList<>();
-		listaEntradas.add(new EntradaCliente(new String("Portão"), LocalDate.now()));
-		prodAux.setEntradas(listaEntradas);		
-		clienteRep.save(prodAux);
+		//listaEntradas.add(new EntradaCliente(new String("Portão"), LocalDate.now()));
+		cliAux.setEntradas(listaEntradas);		
+		clienteRep.save(cliAux);
 
-		prodAux = new Cliente("George Clooney", new String("Foz"));
-		clienteRep.save(prodAux);
+		cliAux = new Cliente("George Clooney", new String("Foz"), new String("geoclooney@mail.com"), new String("(874) 6756-9911"));
+		clienteRep.save(cliAux);
 		clienteRep.flush();
 
 	}

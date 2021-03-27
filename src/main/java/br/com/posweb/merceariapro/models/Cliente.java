@@ -1,6 +1,5 @@
 package br.com.posweb.merceariapro.models;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,14 +29,22 @@ public class Cliente {
 	@Column(nullable = false)	
 	private String cidade;
 	
-
+	@NotBlank(message = "O campo 'email' não pode ser vazio")
+	@Column(nullable = false)	
+	private String email;
+	
+	@NotBlank(message = "O campo 'telefone' não pode ser vazio")
+	@Column(nullable = false)	
+	private String telefone;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<@NotNull @Valid EntradaCliente> entradas = new ArrayList<>();
+	
+	// getters and setter
 	public Long getId() {
 		return id;
 	}
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -65,6 +72,23 @@ public class Cliente {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
 
 	@Override
 	public String toString() {
@@ -72,9 +96,13 @@ public class Cliente {
 	}
 
 	public Cliente(@NotBlank(message = "O campo 'nome' do cliente não pode ser vazio") String nome,
-			@NotBlank(message = "O campo 'cidade' não pode ser vazio") String cidade) {
+			@NotBlank(message = "O campo 'cidade' não pode ser vazio") String cidade,
+			@NotBlank(message = "O campo 'email' não pode ser vazio") String email,
+			@NotBlank(message = "O campo 'telefone' não pode ser vazio") String telefone) {
 		this.nome = nome;
 		this.cidade = cidade;
+		this.email = email;
+		this.telefone = telefone;
 	}
 	
 	public void addEntrada(EntradaCliente nova) {

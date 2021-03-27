@@ -38,6 +38,8 @@
         <tr>
           <th>Nome</th>
           <th>Cidade</th>
+          <th>Email</th>
+          <th>Telefone</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -45,6 +47,8 @@
         <tr th:each="cliente : ${listaClientes}">
           <td th:text="${cliente.nome}"></td>
           <td th:text="${cliente.cidade}"></td>
+          <td th:text="${cliente.email}"></td>
+          <td th:text="${cliente.telefone}"></td>
 
           <td>
             <a th:href="@{/clientes/{id}(id=${cliente.id})}" class="btn btn-primary ">Alterar</a>

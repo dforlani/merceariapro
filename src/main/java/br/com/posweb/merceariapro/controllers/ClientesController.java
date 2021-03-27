@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.posweb.merceariapro.models.Cliente;
 import br.com.posweb.merceariapro.models.EntradaCliente;
-import br.com.posweb.merceariapro.models.Produto;
 import br.com.posweb.merceariapro.repositorios.ClienteRepositorio;
 
 @Controller

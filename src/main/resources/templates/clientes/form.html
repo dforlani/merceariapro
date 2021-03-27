@@ -59,13 +59,27 @@
 									<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"
 									class="text-danger"></span> 
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-3">
 								 <input type="text"
 									th:field="*{cidade}" placeholder="Cidade" class="form-control" />
 									<span th:if="${#fields.hasErrors('cidade')}" th:errors="*{cidade}"
 									class="text-danger"></span>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
+								 <input type="text"
+									th:field="*{email}" placeholder="Email" class="form-control" />
+									<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+									class="text-danger"></span>
+							</div>
+							<div class="col-md-2">
+								 <input type="text"
+									th:field="*{telefone}" placeholder="Telefone" class="form-control" />
+									<span th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"
+									class="text-danger"></span>
+							</div>
+							
+							<div class="col-md-2">
+							<br/>
 								<input type="submit" class="btn btn-primary"
 									value="Salvar Cliente" />
 							</div>

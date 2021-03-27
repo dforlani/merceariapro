@@ -1,0 +1,52 @@
+<!-- TELA LOGIN -->
+
+<!DOCTYPE html>
+<html>
+<head></head>
+
+<body>
+	<br/><br/>
+	<div layout:fragment="content" style="border: 10px green solid; background-color: gray;" class="table table-striped table-responsive-md">
+	<center>
+    <form class="form-signin" th:action="@{/login}" th:object="${user}" method="post">
+        <h2 class="form-signin-heading">LOGIN</h2>
+        <h2 class="form-signin-heading">MerceariaPro</h2>
+        <div class="alert alert-danger" th:if="${param.error}">
+            Senha incorreta ou conta não ativada!
+        </div>
+        <br/>
+        <div>
+        <input type="text" id="inputUsername" name="username" class="form-control top" placeholder="login" required="required" autofocus="autofocus"/>
+        </div>
+        <br/>
+        <div>
+        <input type="password" id="inputPassword" name="password" class="form-control bottom" placeholder="senha"
+           required="required"/>
+        </div>
+        <br/>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="remember-me"/> Lembrar senha
+            </label>
+        </div>
+        <br/>
+        <a href="http://localhost:8080/start">Entrar</a>
+        <!--  button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button-->
+    </form>
+    <br/>
+    </center>
+</div>
+
+<br/><br/><br/><br/>
+<h1>Login</h1>
+
+<form action="/login" method="post">
+
+	<label> User Name : <input type="text" name="username" value="admin"/> </label>
+	<label> Password : <input type="password" name="password" value="admin"/> </label>
+	<button type="submit" class="btn btn-default">Sign In</button>
+
+</form>
+</body>
+
+</html>
