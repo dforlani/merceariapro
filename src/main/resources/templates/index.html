@@ -43,17 +43,13 @@
 		<a href="http://localhost:8080/produtos">Produtos</a>
 		<a href="http://localhost:8080/pedidos">Pedidos</a>
 		<a href="http://localhost:8080/vendas">Vendas</a>
-		
-		<a href="javascript: document.logoutForm.submit()" role="menuitem">Sair</a>
-		<form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
-			<input hidden type="submit" value="Sign Out"/>
-		</form>
 		</center>
 	</div>
-	<!--<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1> -->
-
-        
-       
+	<!--<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+	<a href="javascript: document.logoutForm.submit()" role="menuitem">Sair</a>
+		<form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+			<input hidden type="submit" value="Sign Out"/>
+		</form> -->
         
 </body>
 </html>
