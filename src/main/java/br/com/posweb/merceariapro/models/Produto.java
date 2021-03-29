@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 public class Produto {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name="produto_id")
   private Long id;
 
   @NotBlank(message = "O campo nome do produto nÃ£o pode ser vazio")

@@ -46,7 +46,11 @@ public class ProdutosController {
 
 	@RequestMapping(value="/produtos/salvar", params = {"addEntrada"})
 	public String addEntrada(Produto produto, BindingResult bindingResult) {
-		produto.addEntrada(new EntradaProduto());
+		if (bindingResult.hasErrors()) {			
+			return "produtos/form";			
+		}
+		
+		produto.addEntrada(new EntradaProduto(produto));
 		return "produtos/form";
 	}
 	

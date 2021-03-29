@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -50,7 +49,11 @@ public class EntradaProduto {
 	@NotNull
 	private LocalDate data;
 
-	// get
+	
+	
+	public EntradaProduto(Produto produto){super();this.produto=produto;}
+
+// get
 	public Long getId() {
 		return id;
 	}

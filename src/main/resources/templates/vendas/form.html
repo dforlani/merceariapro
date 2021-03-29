@@ -128,7 +128,8 @@
 								<div class="col-sm-12" style="text-align: left">
 									<span th:errors="*{itens[0].produto}" class="text-danger"></span>
 									<label>Produto</label> <input id="nomeProduto" type="text"
-										required="required" th:field="*{itens[0].produto.nome}"
+									 th:field="*{itens[0].produto.nome}"
+									 required="required"
 										placeholder="Produto" class="form-control mb-12 col-12" /> <input
 										id="produtoId" type="hidden" th:field="*{itens[0].produto}" />
 									<input type='hidden' th:field="*{itens[0].venda}" />
@@ -137,29 +138,35 @@
 								</div>
 
 								<div class="col-sm-12" style="text-align: left">
-									<span th:errors="*{itens[0].quantidade}" class="text-danger"></span>
+									
 									<label>Quantidade</label> <input type="text"
-										style="text-align: right" required="required"
+										style="text-align: right" 
+										required="required"
 										th:field="*{itens[0].quantidade}" placeholder="Quantidade"
 										id="quantidade" class="form-control mb-12 col-12" />
+										<span th:errors="*{itens[0].quantidade}" class="text-danger"></span>
 
 								</div>
 
 
 								<div class="col-sm-12" style="text-align: left">
-									<span th:errors="*{itens[0].precoUnitario}" class="text-danger"></span>
+								
 									<label>Preço Unitário</label> <input type="text"
+									required="required"
 										th:field="*{itens[0].precoUnitario}" readonly
 										style="text-align: right" th:id="produtoPrecoUnitario"
 										placeholder="Preço Unitário" class="form-control mb-12 col-12" />
+											<span th:errors="*{itens[0].precoUnitario}" class="text-danger"></span>
 								</div>
 
 								<div class="col-sm-12" style="text-align: left">
-									<span th:errors="*{itens[0].precoTotal}" class="text-danger"></span>
+									
 									<label>Preço Total</label> <input type="text"
-										style="text-align: right" required="required"
+										style="text-align: right" 
+										required="required"
 										th:field="*{itens[0].precoTotal}" th:id="produtoPrecoTotal"
 										placeholder="Preço Total" class="form-control mb-12 col-12" />
+										<span th:errors="*{itens[0].precoTotal}" class="text-danger"></span>
 								</div>
 
 

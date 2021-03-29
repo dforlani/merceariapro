@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -32,9 +33,7 @@ public class VendaItem {
 
  
   @ManyToOne
-  @NotNull
-  @Valid  
-  @JoinColumn(name = "produto_id", nullable=false)
+  @JoinColumn(name = "produto_id")
   private Produto produto;
 
   @ManyToOne
