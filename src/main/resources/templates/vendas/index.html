@@ -18,6 +18,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
 	integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
 	crossorigin="anonymous"></script>
+
 </head>
 
 <script type="text/javascript">
@@ -66,18 +67,18 @@
 			<thead>
 				<tr>
 					<th>Nome</th>
-						<th>Total</th>
-					<th>Data</th>
 				
+					<th>Data</th>
+
 
 					<th>Ações</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="venda : ${listaVendas}">
+				<tr th:each="venda : ${listaVendas.content}">
 
-					<td th:text="${venda.getNomeCliente()}"></td>
-					<td style="text-align: right" th:text="${venda.getSomatorioTotal()}"></td>
+					<td th:text="${venda.nome}"></td>
+
 					<td
 						th:text="${#temporals.format(venda.getData(), 'dd/MM/yyyy HH:mm')}"></td>
 
@@ -88,6 +89,18 @@
 				</tr>
 			</tbody>
 		</table>
+		
+		<nav aria-label="...">
+		    <ul class="pagination">
+			    <li th:if="${listaVendas.totalPages}" th:each="numeroPagina : ${numerosPaginas}" 
+			    	th:class="${numeroPagina==listaVendas.number + 1} ? 'page-item active' : 'page-item'">
+			    	
+			    	<a class="page-link" th:href="@{/vendas(size=${listaVendas.size}, page=${numeroPagina})}"
+			        th:text="${numeroPagina}"></a>
+			    </li>
+		    </ul>
+		</nav>
+
 	</div>
 </body>
 

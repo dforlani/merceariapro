@@ -73,6 +73,22 @@ public class PopulacaoInicialProduto implements CommandLineRunner {
 		vendaRepositorio.save(venda);	
 		vendaRepositorio.flush();
 
+		//INCLUSÃO AUTOMÁTICA DE VENDAS
+				 venda = new Venda(LocalDateTime.now());			
+				vendaItem = new VendaItem(new BigDecimal(10), produtos.get(0), venda, new BigDecimal(10.9), new BigDecimal(30.60));		
+				venda.addItemVenda(vendaItem);
+				
+				vendaRepositorio.save(venda);	
+				vendaRepositorio.flush();
+				
+				//INCLUSÃO AUTOMÁTICA DE VENDAS
+				 venda = new Venda(LocalDateTime.now());
+		
+				vendaItem = new VendaItem(new BigDecimal(10), produtos.get(0), venda, new BigDecimal(10.9), new BigDecimal(30.60));		
+				venda.addItemVenda(vendaItem);
+				
+				vendaRepositorio.save(venda);	
+				vendaRepositorio.flush();
 	}
 }
 

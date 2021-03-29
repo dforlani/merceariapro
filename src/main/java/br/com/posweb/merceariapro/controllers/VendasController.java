@@ -5,9 +5,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.posweb.merceariapro.dtos.AutoCompleteDTO;
 import br.com.posweb.merceariapro.dtos.AutoCompleteDTOVendas;
+import br.com.posweb.merceariapro.dtos.VendasListaDTO;
 import br.com.posweb.merceariapro.models.Cliente;
 import br.com.posweb.merceariapro.models.Produto;
 import br.com.posweb.merceariapro.models.Venda;
@@ -52,11 +58,35 @@ public class VendasController {
 	}
 
 	@GetMapping("/vendas")
-	public String vendas(Model model) {
-		List<Venda> vendas = vendaRepositorio.findAll();		
-		model.addAttribute("listaVendas", vendas);
+	public String vendas(Model model, @RequestParam("page") Optional<Integer> pagina, @RequestParam("size") Optional<Integer> tamanho) {
+		int paginaAtual = pagina.orElse(1) - 1;
+		int tamanhoPagina = tamanho.orElse(2);
+		
+		PageRequest requisicao = PageRequest.of(paginaAtual, tamanhoPagina, Sort.by("data"));
+		Page<VendasListaDTO> listaPaginada = vendaRepositorio.findAllVendasPaginado(requisicao);
+		
+		model.addAttribute("listaVendas", listaPaginada);
+		
+		int totalPaginas = listaPaginada.getTotalPages();		
+		if(totalPaginas > 0) {
+			List<Integer> numeroPaginas = IntStream.rangeClosed(1, totalPaginas)
+					.boxed()
+					.collect(Collectors.toList());
+			model.addAttribute("numerosPaginas", numeroPaginas);
+			System.out.print("numerosPaginas +++++++++++++++++"+numeroPaginas);
+		}
+		
 		model.addAttribute("venda", new Venda());
+		
+		System.out.print("Pgainas +++++++++++++++++"+listaPaginada.getTotalPages());
+		
+		
 		return "vendas/index";
+		
+//		List<Venda> vendas = vendaRepositorio.findAll();		
+//		model.addAttribute("listaVendas", vendas);
+//		model.addAttribute("venda", new Venda());
+//		return "vendas/index";
 	}
 
 	/**
