@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 
-<head>...
+  <meta charset="UTF-8" />
 </head>
 
 <body>
@@ -14,7 +14,7 @@
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#conteudoNavbarSuportado"
 			aria-controls="conteudoNavbarSuportado" aria-expanded="false"
-			aria-label="Alterna navega��o">
+			aria-label="Alterna navegação">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
@@ -23,30 +23,42 @@
 				<li
 					th:classappend="${#httpServletRequest.getRequestURI() == '/vendas' ? 'active':''}"
 					class="nav-item "><a class="nav-link " th:href="@{/vendas}">Vendas
-						<span class="sr-only">(p�gina atual)</span>
+						<span class="sr-only">(página atual)</span>
 				</a></li>
 				<li class="nav-item"
 					th:classappend="${#httpServletRequest.getRequestURI() == '/clientes' ? 'active':''}"><a
 					class="nav-link" th:href="@{/clientes}">Clientes <span
-						class="sr-only">(p�gina atual)</span></a></li>
+						class="sr-only">(página atual)</span></a></li>
 				<li class="nav-item "
 					th:classappend="${#httpServletRequest.getRequestURI() == '/produtos' ? 'active':''}"><a
 					class="nav-link" th:href="@{/produtos}">Produtos <span
-						class="sr-only">(p�gina atual)</span></a></li>
+						class="sr-only">(página atual)</span></a></li>
 				<li class="nav-item "
 					th:classappend="${#httpServletRequest.getRequestURI() == '/estoque' ? 'active':''}"><a
 					class="nav-link" th:href="@{/estoque}">Estoque <span
-						class="sr-only">(p�gina atual)</span></a></li>
+						class="sr-only">(página atual)</span></a></li>
 				
 				<li class="nav-item active"><a class="nav-link"
 					href="javascript: document.logoutForm.submit()" role="menuitem">Sair
 						<form name="logoutForm" th:action="@{/logout}" method="post"
 							th:hidden="true">
 							<input hidden type="submit" value="Sign Out" />
-						</form> <span class="sr-only">(p�gina atual)</span>
+						</form> <span class="sr-only">(página atual)</span>
 				</a></li>
+				
+			
 			</ul>
-			<a class="nav-link"><p th:inline="text">Ola [[${#httpServletRequest.remoteUser}]]</p></a>
+				<div sec:authorize="isAuthenticated()">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="nav-item">
+							<form name="logoutForm" th:action="@{/logout}" method="post">
+								<label>Olá <span sec:authentication="name">[[${#httpServletRequest.remoteUser}]]</span></label>
+								<input class="btn btn-outline-danger" type="submit" value="Sair" />
+							</form>
+						</li>
+					</ul>
+				</div>
+			
 		</div>
 	</nav>
 </body>
