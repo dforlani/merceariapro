@@ -80,7 +80,9 @@
 			<input type="hidden" id="data" th:field="*{data}" />
 
 			<div class="card">
-				<div class="card-header">Cliente</div>
+				<div class="card-header">
+					<h2>Cliente</h2>
+				</div>
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm-4" style='text-align: left;'>
@@ -102,99 +104,124 @@
 			</div>
 		</form>
 		<br>
+		<div class="row">
+			<div class="col-sm-6">
 
-		<form action="#" th:action="@{/vendas/venda/}+${venda.id}"
-			th:object="${venda}" method="POST">
-
-
-			<div class="card">
-				<div class="card-header">Novo Item</div>
-				<div class="card-body">
-
-					<input type="hidden" id="id" th:field="*{id}" /> <input
-						type="hidden" id="data" th:field="*{data}" /> <input
-						type="hidden" id="cliente" th:field="*{cliente}" />
+				<form action="#" th:action="@{/vendas/venda/}+${venda.id}"
+					th:object="${venda}" method="POST">
 
 
-
-
-					<div class="row">
-						<div class="col-sm-3" style="text-align: left">
-							<span th:errors="*{itens[0].produto}" class="text-danger"></span>
-							<label>Produto</label> <input id="nomeProduto" type="text"
-								required="required" th:field="*{itens[0].produto.nome}"
-								placeholder="Produto" class="form-control mb-12 col-12" /> <input
-								id="produtoId" type="hidden" th:field="*{itens[0].produto}" />
-							<input type='hidden' th:field="*{itens[0].venda}" />
-
-
+					<div class="card">
+						<div class="card-header">
+							<h2>Novo Item</h2>
 						</div>
+						<div class="card-body">
 
-						<div class="col-sm-2" style="text-align: left">
-							<span th:errors="*{itens[0].quantidade}" class="text-danger"></span>
-							<label>Quantidade</label> <input type="text" required="required"
-								th:field="*{itens[0].quantidade}" placeholder="Quantidade"
-								id="quantidade" class="form-control mb-12 col-12" />
+							<input type="hidden" id="id" th:field="*{id}" /> <input
+								type="hidden" id="data" th:field="*{data}" /> <input
+								type="hidden" id="cliente" th:field="*{cliente}" />
 
-						</div>
 
-						<div class="col-sm-2" style="text-align: left">
-							<span th:errors="*{itens[0].precoUnitario}" class="text-danger"></span>
-							<label>Preço Unitário</label> <input type="text"
-								th:field="*{itens[0].precoUnitario}" readonly
-								th:id="produtoPrecoUnitario" placeholder="Preço Unitário"
-								class="form-control mb-12 col-12" />
-						</div>
 
-						<div class="col-sm-2" style="text-align: left">
-							<span th:errors="*{itens[0].precoTotal}" class="text-danger"></span>
-							<label>Preço Total</label> <input type="text" required="required"
-								th:field="*{itens[0].precoTotal}" th:id="produtoPrecoTotal"
-								placeholder="Preço Total" class="form-control mb-12 col-12" />
-						</div>
 
-						<div class="col-sm-6" style="text-align: left">
-							<br />
-							<button type="submit" class="btn btn-info" name="salvarVenda">Adicionar</button>
+							<div class="row">
+								<div class="col-sm-12" style="text-align: left">
+									<span th:errors="*{itens[0].produto}" class="text-danger"></span>
+									<label>Produto</label> <input id="nomeProduto" type="text"
+										required="required" th:field="*{itens[0].produto.nome}"
+										placeholder="Produto" class="form-control mb-12 col-12" /> <input
+										id="produtoId" type="hidden" th:field="*{itens[0].produto}" />
+									<input type='hidden' th:field="*{itens[0].venda}" />
+
+
+								</div>
+
+								<div class="col-sm-12" style="text-align: left">
+									<span th:errors="*{itens[0].quantidade}" class="text-danger"></span>
+									<label>Quantidade</label> <input type="text"
+										style="text-align: right" required="required"
+										th:field="*{itens[0].quantidade}" placeholder="Quantidade"
+										id="quantidade" class="form-control mb-12 col-12" />
+
+								</div>
+
+
+								<div class="col-sm-12" style="text-align: left">
+									<span th:errors="*{itens[0].precoUnitario}" class="text-danger"></span>
+									<label>Preço Unitário</label> <input type="text"
+										th:field="*{itens[0].precoUnitario}" readonly
+										style="text-align: right" th:id="produtoPrecoUnitario"
+										placeholder="Preço Unitário" class="form-control mb-12 col-12" />
+								</div>
+
+								<div class="col-sm-12" style="text-align: left">
+									<span th:errors="*{itens[0].precoTotal}" class="text-danger"></span>
+									<label>Preço Total</label> <input type="text"
+										style="text-align: right" required="required"
+										th:field="*{itens[0].precoTotal}" th:id="produtoPrecoTotal"
+										placeholder="Preço Total" class="form-control mb-12 col-12" />
+								</div>
+
+
+								<div class="col-sm-12" style="text-align: right">
+									<br />
+									<button type="submit" class="btn btn-info" name="salvarVenda">Adicionar</button>
+								</div>
+							</div>
+
 						</div>
 					</div>
 
+				</form>
+				<br>
+				<div class="card">
+					<div class="card-header">
+						<h2>Totais</h2>
+					</div>
+					<div class="card-body">
+						<h1 th:inline="text">Total dos Itens: [[${total}]]</h1>
+
+					</div>
 				</div>
 			</div>
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-header">
+						<h2>Itens no Carrinho</h2>
+					</div>
+					<div class="card-body">
 
-		</form>
+						<table border="1" class="table table-striped table-responsive-md">
+							<thead>
+								<tr>
+									<th>Produto</th>
+									<th>Quantidade</th>
+									<th>Preço Unitário</th>
+									<th>Preço Total</th>
+									<th>Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="item : ${venda.itensPersistidos}">
 
-		<br />
-		<h1>Itens no Carrinho</h1>
+									<td th:text="${item.produto.nome}"></td>
+									<td th:text="${item.quantidade}" style="text-align: right"></td>
+									<td th:text="${item.precoUnitario}" style="text-align: right"></td>
+									<td th:text="${item.precoTotal}" style="text-align: right"></td>
 
-		<table border="1" class="table table-striped table-responsive-md">
-			<thead>
-				<tr>
-					<th>Produto</th>
-					<th>Quantidade</th>
-					<th>Preço Unitário</th>
-					<th>Preço Total</th>
-					<th>Ações</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="item : ${venda.itensPersistidos}">
+									<td><a
+										th:href="@{/vendas/venda/}+${venda.id}+@{/excluirItem/{id}(id=${item.id})}"
+										class="btn btn-danger callConfirm">Excluir</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<hr />
 
-					<td th:text="${item.produto.nome}"></td>
-					<td th:text="${item.quantidade}"></td>
-					<td th:text="${item.precoUnitario}"></td>
-					<td th:text="${item.precoTotal}"></td>
-
-					<td><a
-						th:href="@{/vendas/venda/}+${venda.id}+@{/excluirItem/{id}(id=${item.id})}"
-						class="btn btn-danger callConfirm">Excluir</a></td>
-				</tr>
-			</tbody>
-		</table>
-		<hr />
-		<h1 th:inline="text">Total dos Itens: [[${total}]]</h1>
+		</div>
 		<a th:href="@{/vendas}">Retornar para a lista de vendas</a>
-	</div>
 </body>
 
 </html>
