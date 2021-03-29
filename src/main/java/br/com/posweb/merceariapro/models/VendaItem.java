@@ -1,6 +1,8 @@
 package br.com.posweb.merceariapro.models;
 
 import java.math.BigDecimal;
+
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -19,7 +22,7 @@ public class VendaItem {
   private Long id;
 
   @NotNull
-  private int quantidade;
+  private BigDecimal quantidade;
 
   @NotNull
   private BigDecimal precoUnitario;
@@ -27,9 +30,11 @@ public class VendaItem {
   @NotNull
   private BigDecimal precoTotal;
 
-  @NotNull
+ 
   @ManyToOne
-  @JoinColumn(name = "produto_id")
+  @NotNull
+  @Valid  
+  @JoinColumn(name = "produto_id", nullable=false)
   private Produto produto;
 
   @ManyToOne
@@ -55,13 +60,13 @@ public class VendaItem {
     this.precoUnitario = precoUnitario;
   }
 
-  public VendaItem(@NotNull int quantidade, Venda venda) {
+  public VendaItem(@NotNull BigDecimal quantidade, Venda venda) {
     super();
     this.quantidade = quantidade;
     this.venda = venda;
   }
   
-  public VendaItem(@NotNull int quantidade, Venda venda, boolean novo) {
+  public VendaItem(@NotNull BigDecimal quantidade, Venda venda, boolean novo) {
 	    super();
 	    this.quantidade = quantidade;
 	    this.venda = venda;
@@ -84,15 +89,15 @@ public class VendaItem {
     this.id = id;
   }
 
-  public int getQuantidade() {
+  public BigDecimal getQuantidade() {
     return quantidade;
   }
 
-  public void setQuantidade(int quantidade) {
+  public void setQuantidade(BigDecimal quantidade) {
     this.quantidade = quantidade;
   }
 
-  public VendaItem(int quantidade) {
+  public VendaItem(BigDecimal quantidade) {
     this.quantidade = quantidade;
   }
 
@@ -135,14 +140,14 @@ public class VendaItem {
     this.produto = produto;
   }
 
-  public VendaItem(int quantidade, Produto produto, Venda venda) {
+  public VendaItem(BigDecimal quantidade, Produto produto, Venda venda) {
     this.quantidade = quantidade;
     this.produto = produto;
     this.venda = venda;
   }
 
   public VendaItem(
-    int quantidade,
+		  BigDecimal quantidade,
     Produto produto,
     Venda venda,
     BigDecimal precoUnitario,

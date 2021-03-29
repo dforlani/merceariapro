@@ -43,7 +43,7 @@
       <tbody>
         <tr th:each="produto : ${listaProdutos}">
           <td th:text="${produto.nome}"></td>
-          <td th:text="${produto.valor}"></td>
+          <td style="text-align: right" th:text="${produto.valor}"></td>
 
           <td>
             <a th:href="@{/produtos/{id}(id=${produto.id})}" class="btn btn-primary ">Alterar</a>

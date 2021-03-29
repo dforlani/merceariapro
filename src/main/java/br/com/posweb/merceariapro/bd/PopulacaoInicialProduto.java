@@ -67,7 +67,7 @@ public class PopulacaoInicialProduto implements CommandLineRunner {
 		//INCLUSÃO AUTOMÁTICA DE VENDAS
 		Venda venda = new Venda(LocalDateTime.now());
 		List<Produto> produtos = produtoRep.findAll();
-		VendaItem vendaItem = new VendaItem(10, produtos.get(0), venda, new BigDecimal(10.9), new BigDecimal(30.60));		
+		VendaItem vendaItem = new VendaItem(new BigDecimal(10), produtos.get(0), venda, new BigDecimal(10.9), new BigDecimal(30.60));		
 		venda.addItemVenda(vendaItem);
 		
 		vendaRepositorio.save(venda);	
