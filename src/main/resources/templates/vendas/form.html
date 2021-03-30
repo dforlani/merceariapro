@@ -126,13 +126,13 @@
 
 							<div class="row">
 								<div class="col-sm-12" style="text-align: left">
-									<span th:errors="*{itens[0].produto}" class="text-danger"></span>
+									
 									<label>Produto</label> <input id="nomeProduto" type="text"
-									 th:field="*{itens[0].produto.nome}"
-									 required="required"
+										 th:field="${vendaItem.nomeProduto}"
 										placeholder="Produto" class="form-control mb-12 col-12" /> <input
-										id="produtoId" type="hidden" th:field="*{itens[0].produto}" />
-									<input type='hidden' th:field="*{itens[0].venda}" />
+										id="produtoId" type="hidden" th:field="${vendaItem.produto}" />
+									<input type='hidden' th:field="${vendaItem.venda}" />
+									<span th:errors="${vendaItem.produto}" class="text-danger"></span>
 
 
 								</div>
@@ -141,38 +141,34 @@
 									
 									<label>Quantidade</label> <input type="text"
 										style="text-align: right" 
-										required="required"
-										th:field="*{itens[0].quantidade}" placeholder="Quantidade"
+										th:field="${vendaItem.quantidade}" placeholder="Quantidade"
 										id="quantidade" class="form-control mb-12 col-12" />
-										<span th:errors="*{itens[0].quantidade}" class="text-danger"></span>
+										<span th:errors="${vendaItem.quantidade}" class="text-danger"></span>
 
 								</div>
 
 
 								<div class="col-sm-12" style="text-align: left">
-								
+									
 									<label>Preço Unitário</label> <input type="text"
-									required="required"
-										th:field="*{itens[0].precoUnitario}" readonly
+										th:field="${vendaItem.precoUnitario}" readonly
 										style="text-align: right" th:id="produtoPrecoUnitario"
 										placeholder="Preço Unitário" class="form-control mb-12 col-12" />
-											<span th:errors="*{itens[0].precoUnitario}" class="text-danger"></span>
+										<span th:errors="${vendaItem.precoUnitario}" class="text-danger"></span>
 								</div>
 
 								<div class="col-sm-12" style="text-align: left">
 									
 									<label>Preço Total</label> <input type="text"
-										style="text-align: right" 
-										required="required"
-										th:field="*{itens[0].precoTotal}" th:id="produtoPrecoTotal"
+										style="text-align: right" 										th:field="${vendaItem.precoTotal}" th:id="produtoPrecoTotal"
 										placeholder="Preço Total" class="form-control mb-12 col-12" />
-										<span th:errors="*{itens[0].precoTotal}" class="text-danger"></span>
+										<span th:errors="${vendaItem.precoTotal}" class="text-danger"></span>
 								</div>
 
 
 								<div class="col-sm-12" style="text-align: right">
 									<br />
-									<button type="submit" class="btn btn-info" name="salvarVenda">Adicionar</button>
+									<button type="submit" class="btn btn-info" name="adicionarItem">Adicionar</button>
 								</div>
 							</div>
 

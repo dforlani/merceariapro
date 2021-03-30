@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Produto {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY )
   @Column(name="produto_id")
   private Long id;
 
@@ -31,8 +31,9 @@ public class Produto {
   @Column(nullable = false)
   private BigDecimal valor;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-  @JoinColumn(name = "produto_id")
+  
+  //@JoinColumn(name = "produto_id")
+  @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<VendaItem> saidas = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

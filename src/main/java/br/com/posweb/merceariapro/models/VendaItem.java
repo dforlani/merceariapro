@@ -12,14 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "venda_item")
 public class VendaItem {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY )
   private Long id;
 
   @NotNull
@@ -33,7 +32,8 @@ public class VendaItem {
 
  
   @ManyToOne
-  @JoinColumn(name = "produto_id")
+  @NotNull
+  @JoinColumn(name = "produto_id", nullable=false)
   private Produto produto;
 
   @ManyToOne

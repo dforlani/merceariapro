@@ -159,11 +159,13 @@ public class VendasController {
 		
 		
 		//adiciona um novo VendaItem 
-		venda.addItemVenda(new VendaItem(new BigDecimal(1), venda, true));
+//		venda.addItemVenda(new VendaItem(new BigDecimal(1), venda, true));
+		VendaItem vendaItem = new VendaItem(new BigDecimal(1));
+		vendaItem.setVenda(venda);
 		
 		model.addAttribute("total", total);
 		model.addAttribute("venda", venda);
-		model.addAttribute("vendaItem", new VendaItem(new BigDecimal(1)));
+		model.addAttribute("vendaItem", vendaItem);
 		
 
 		return "vendas/form";
@@ -172,26 +174,17 @@ public class VendasController {
 
 
 	
-	@PostMapping("/vendas/{vendaId}/adicionarItem")
-	public String adicionarItem(@PathVariable("vendaId") Long vendaId, @RequestParam("produtoId") Long produtoId,
-			@ModelAttribute("vendaItem") VendaItem vendaItem, Model model) {
-		// if (bindingResult.hasErrors()) {
-		// return "vendas/form";
-		// }
-
-		Optional<Venda> vendaOpt = vendaRepositorio.findById(vendaId);
-		Optional<Produto> produtoOpt = produtoRepositorio.findById(produtoId);
-
-		if (!(vendaOpt.isEmpty()) && !produtoOpt.isEmpty()) {
-			vendaItem.setProduto(produtoOpt.get());
-			vendaItem.setVenda(vendaOpt.get());
-
-			vendaItemRepositorio.save(vendaItem);
-		} else {
-			vendaItem = new VendaItem();
+	@PostMapping(value="/vendas/venda/{id}", params = {"adicionarItem"})
+	public String adicionarItem(@ModelAttribute("venda") Venda venda, @ModelAttribute("vendaItem") @Valid VendaItem vendaItem, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return "vendas/form";
 		}
 
-		return "redirect:/vendas/" + vendaId;
+		venda.addItemVenda(vendaItem);
+		vendaRepositorio.save(venda);		
+		vendaRepositorio.flush();
+
+		return vendaForm(venda, model);
 	}
 	
 

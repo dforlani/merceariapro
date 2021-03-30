@@ -20,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Venda {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY )
   private Long id;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
